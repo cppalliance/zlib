@@ -10,10 +10,10 @@
 #ifndef BOOST_ZLIB_HPP
 #define BOOST_ZLIB_HPP
 
-#include <boost/zlib/core/detail/config.hpp>
+#include <boost/zlib/detail/config.hpp>
 
 #include <boost/zlib/deflate_stream.hpp>
-#include <boost/zlib/core/error.hpp>
+#include <boost/zlib/error.hpp>
 #include <boost/zlib/inflate_stream.hpp>
 #include <boost/zlib/zlib.hpp>
 

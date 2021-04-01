@@ -10,7 +10,7 @@
 // Test that header file is self-contained.
 #include <boost/zlib/deflate_stream.hpp>
 
-#include <boost/zlib/core/string_type.hpp>
+#include <boost/zlib/string_type.hpp>
 #include "test_suite.hpp"
 #include <array>
 #include <cstdint>

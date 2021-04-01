@@ -38,7 +38,7 @@
 #ifndef BOOST_ZLIB_CORE_IMPL_ERROR_IPP
 #define BOOST_ZLIB_CORE_IMPL_ERROR_IPP
 
-#include <boost/zlib/core/error.hpp>
+#include <boost/zlib/error.hpp>
 #include <type_traits>
 
 namespace boost {

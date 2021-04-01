@@ -10,7 +10,7 @@
 #ifndef BOOST_ZLIB_CORE_ERROR_HPP
 #define BOOST_ZLIB_CORE_ERROR_HPP
 
-#include <boost/zlib/core/detail/config.hpp>
+#include <boost/zlib/detail/config.hpp>
 #include <boost/system/error_code.hpp>
 #include <boost/system/system_error.hpp>
 
@@ -152,9 +152,9 @@ enum class error
 } // zlib
 } // boost
 
-#include <boost/zlib/core/impl/error.hpp>
+#include <boost/zlib/detail/impl/error.hpp>
 #ifdef BOOST_ZLIB_HEADER_ONLY
-#include <boost/zlib/core/impl/error.ipp>
+#include <boost/zlib/detail/impl/error.ipp>
 #endif
 
 #endif

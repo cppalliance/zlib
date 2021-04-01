@@ -26,9 +26,9 @@ in a translation unit of the program.
 // https://github.com/boostorg/json/issues/223#issuecomment-689264149
 #include <boost/zlib.hpp>
 
-#include <boost/zlib/core/detail/config.hpp>
+#include <boost/zlib/detail/config.hpp>
 
-#include <boost/zlib/core/impl/error.ipp>
+#include <boost/zlib/detail/impl/error.ipp>
 #include <boost/zlib/detail/impl/deflate_stream.ipp>
 #include <boost/zlib/detail/impl/inflate_stream.ipp>
 

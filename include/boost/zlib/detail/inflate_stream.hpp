@@ -37,13 +37,13 @@
 #ifndef BOOST_ZLIB_DETAIL_INFLATE_STREAM_HPP
 #define BOOST_ZLIB_DETAIL_INFLATE_STREAM_HPP
 
-#include <boost/zlib/core/error.hpp>
+#include <boost/zlib/error.hpp>
 #include <boost/zlib/zlib.hpp>
 #include <boost/zlib/detail/bitstream.hpp>
 #include <boost/zlib/detail/ranges.hpp>
 #include <boost/zlib/detail/window.hpp>
 #if 0
-#include <boost/zlib/core/detail/type_traits.hpp>
+#include <boost/zlib/detail/type_traits.hpp>
 #include <boost/throw_exception.hpp>
 #include <algorithm>
 #include <array>

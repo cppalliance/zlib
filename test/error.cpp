@@ -8,7 +8,7 @@
 //
 
 // Test that header file is self-contained.
-#include <boost/zlib/core/error.hpp>
+#include <boost/zlib/error.hpp>
 
 #include "test_suite.hpp"
 #include <memory>

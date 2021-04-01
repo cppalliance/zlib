@@ -37,7 +37,7 @@
 #ifndef BOOST_ZLIB_ZLIB_HPP
 #define BOOST_ZLIB_ZLIB_HPP
 
-#include <boost/zlib/core/detail/config.hpp>
+#include <boost/zlib/detail/config.hpp>
 #include <cstdint>
 #include <cstdlib>
 

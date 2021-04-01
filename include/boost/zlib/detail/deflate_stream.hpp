@@ -37,7 +37,7 @@
 #ifndef BOOST_ZLIB_DETAIL_DEFLATE_STREAM_HPP
 #define BOOST_ZLIB_DETAIL_DEFLATE_STREAM_HPP
 
-#include <boost/zlib/core/error.hpp>
+#include <boost/zlib/error.hpp>
 #include <boost/zlib/zlib.hpp>
 #include <boost/zlib/detail/ranges.hpp>
 #include <boost/assert.hpp>

@@ -37,7 +37,7 @@
 #ifndef BOOST_ZLIB_INFLATE_STREAM_HPP
 #define BOOST_ZLIB_INFLATE_STREAM_HPP
 
-#include <boost/zlib/core/detail/config.hpp>
+#include <boost/zlib/detail/config.hpp>
 #include <boost/zlib/detail/inflate_stream.hpp>
 
 namespace boost {

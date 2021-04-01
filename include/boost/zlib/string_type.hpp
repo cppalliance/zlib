@@ -10,7 +10,7 @@
 #ifndef BOOST_ZLIB_STRING_TYPE_HPP
 #define BOOST_ZLIB_STRING_TYPE_HPP
 
-#include <boost/zlib/core/detail/config.hpp>
+#include <boost/zlib/detail/config.hpp>
 
 #if defined(BOOST_ZLIB_USE_STD_STRING_VIEW)
 #include <string_view>
