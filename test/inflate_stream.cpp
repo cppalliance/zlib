@@ -10,7 +10,7 @@
 // Test that header file is self-contained.
 #include <boost/zlib/inflate_stream.hpp>
 
-#include <boost/zlib/core/string.hpp>
+#include <boost/zlib/core/string_type.hpp>
 #include "test_suite.hpp"
 #include <chrono>
 #include <random>
