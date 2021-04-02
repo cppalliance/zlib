@@ -10,7 +10,6 @@
 import testing ;
 import ../../config/checks/config : requires ;
 
-
 path-constant ZLIB_SOURCES :
     extern/zlib-1.2.11/adler32.c
     extern/zlib-1.2.11/compress.c
@@ -25,15 +24,11 @@ path-constant ZLIB_SOURCES :
     extern/zlib-1.2.11/zutil.c
     ;
 
-
 import os ;
-STANDALONE = [ os.environ STANDALONE ] ;
-if $(STANDALONE)
+HEADER_ONLY = [ os.environ HEADER_ONLY ] ;
+if $(HEADER_ONLY)
 {
-    LIB =
-        <define>BOOST_ZLIB_STANDALONE=1
-        <source>../src/src.cpp
-        ;
+    LIB = <source>../src/src.cpp ;
 }
 else
 {
@@ -59,18 +54,6 @@ for local f in $(SOURCES)
             /boost//container/<warnings-as-errors>off
             : : : $(LIB) <include>.
         ] ;
-}
-
-if ! $(STANDALONE)
-{
-    RUN_TESTS += [
-        compile standalone_with_boost.cpp $(ZLIB_SOURCES)
-            : [ requires
-              cxx17_hdr_string_view
-              cxx17_hdr_memory_resource
-              ]
-              <define>BOOST_ZLIB_STANDALONE=1
-    ] ;
 }
 
 alias run-tests : $(RUN_TESTS) ;
