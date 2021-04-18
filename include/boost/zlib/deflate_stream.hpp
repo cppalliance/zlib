@@ -55,7 +55,7 @@ namespace zlib {
 
     This is a port of zlib's "deflate" functionality to C++.
 */
-class deflate_stream
+class BOOST_ZLIB_CLASS_DECL deflate_stream
     : private detail::deflate_stream
 {
 public:

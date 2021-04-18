@@ -7,8 +7,8 @@
 // Official repository: https://github.com/CPPAlliance/ZLib
 //
 
-#ifndef BOOST_ZLIB_CORE_ERROR_HPP
-#define BOOST_ZLIB_CORE_ERROR_HPP
+#ifndef BOOST_ZLIB_ERROR_HPP
+#define BOOST_ZLIB_ERROR_HPP
 
 #include <boost/zlib/detail/config.hpp>
 #include <boost/system/error_code.hpp>
@@ -152,9 +152,6 @@ enum class error
 } // zlib
 } // boost
 
-#include <boost/zlib/detail/impl/error.hpp>
-#ifdef BOOST_ZLIB_HEADER_ONLY
-#include <boost/zlib/detail/impl/error.ipp>
-#endif
+#include <boost/zlib/impl/error.hpp>
 
 #endif

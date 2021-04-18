@@ -59,7 +59,7 @@ namespace zlib {
     application must provide more input and/or consume the output (providing
     more output space) before each call.
 */
-class inflate_stream
+class BOOST_ZLIB_CLASS_DECL inflate_stream
     : private detail::inflate_stream
 {
 public:

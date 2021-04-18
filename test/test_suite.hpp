@@ -4,7 +4,7 @@
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
-// Official repository: https://github.com/boostorg/json
+// Official repository: https://github.com/boostorg/zlib
 //
 
 #ifndef TEST_SUITE_HPP
@@ -30,6 +30,12 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <debugapi.h>
+#ifdef min
+#undef min
+#endif
+#ifdef max
+#undef max
+#endif
 #endif
 
 //  This is a derivative work
@@ -574,7 +580,7 @@ struct instance
     {
         auto const saved =
             current();
-        //current()->os_ 
+        //current()->os_
         T().run();
         current() = saved;
     }

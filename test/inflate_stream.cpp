@@ -471,7 +471,7 @@ public:
                0x00, 0x00, 0x00, 0x00, 0x00, 0x06}, {});
     }
 
-    std::string check(IDecompressor& d,
+    std::string check(IDecompressor&,
         std::initializer_list<std::uint8_t> const& in,
         error_code expected,
         std::size_t window_size = 15,

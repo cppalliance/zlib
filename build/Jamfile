@@ -14,7 +14,6 @@ project boost/zlib
       $(c11-requires)
       <link>shared:<define>BOOST_ZLIB_DYN_LINK=1
       <link>static:<define>BOOST_ZLIB_STATIC_LINK=1
-      <library>/boost//container/<warnings-as-errors>off
       <define>BOOST_ZLIB_SOURCE
     : usage-requirements
       $(c11-requires)

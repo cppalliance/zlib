@@ -45,7 +45,7 @@ namespace boost {
 namespace zlib {
 namespace detail {
 
-class bitstream
+class BOOST_ZLIB_CLASS_DECL bitstream
 {
     using value_type = std::uint32_t;
 

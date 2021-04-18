@@ -49,29 +49,37 @@
 #define BOOST_ZLIB_DEPRECATION_STRING \
     "This is a deprecated interface, #define BOOST_ZLIB_ALLOW_DEPRECATED to allow it"
 
-#ifndef BOOST_ZLIB_ASSUME
-# ifdef BOOST_GCC
-#  define BOOST_ZLIB_ASSUME(cond) \
-    do { if (!(cond)) __builtin_unreachable(); } while (0)
+# if defined(BOOST_ZLIB_DOCS)
+#  define BOOST_ZLIB_DECL
 # else
-#  define BOOST_ZLIB_ASSUME(cond) do { } while(0)
+#  if (defined(BOOST_ZLIB_DYN_LINK) || defined(BOOST_ALL_DYN_LINK)) && !defined(BOOST_ZLIB_STATIC_LINK)
+#   if defined(BOOST_ZLIB_SOURCE)
+#    define BOOST_ZLIB_DECL        BOOST_SYMBOL_EXPORT
+#    define BOOST_ZLIB_CLASS_DECL  BOOST_SYMBOL_EXPORT
+#    define BOOST_ZLIB_BUILD_DLL
+#   else
+#    define BOOST_ZLIB_DECL        BOOST_SYMBOL_IMPORT
+#    define BOOST_ZLIB_CLASS_DECL  BOOST_SYMBOL_IMPORT
+#   endif
+#  endif // shared lib
+#  ifndef  BOOST_ZLIB_DECL
+#   define BOOST_ZLIB_DECL
+#  endif
+#  if !defined(BOOST_ZLIB_SOURCE) && !defined(BOOST_ALL_NO_LIB) && !defined(BOOST_ZLIB_NO_LIB)
+#   define BOOST_LIB_NAME boost_zlib
+#   if defined(BOOST_ALL_DYN_LINK) || defined(BOOST_ZLIB_DYN_LINK)
+#    define BOOST_DYN_LINK
+#   endif
+#   include <boost/config/auto_link.hpp>
+#  endif
 # endif
-#endif
 
-// Default to a header-only implementation. The user must specifically
-// request separate compilation by defining BOOST_ZLIB_SEPARATE_COMPILATION
-#ifndef BOOST_ZLIB_HEADER_ONLY
-# ifndef BOOST_ZLIB_SEPARATE_COMPILATION
-#   define BOOST_ZLIB_HEADER_ONLY 1
-# endif
-#endif
 
-#if BOOST_ZLIB_DOXYGEN
-# define BOOST_ZLIB_DECL
-#elif defined(BOOST_ZLIB_HEADER_ONLY)
-# define BOOST_ZLIB_DECL inline
-#else
-# define BOOST_ZLIB_DECL
+#ifndef BOOST_ZLIB_DECL
+#define BOOST_ZLIB_DECL
+#endif
+#ifndef BOOST_ZLIB_CLASS_DECL
+#define BOOST_ZLIB_CLASS_DECL
 #endif
 
 #endif

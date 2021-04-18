@@ -47,7 +47,7 @@ namespace boost {
 namespace zlib {
 namespace detail {
 
-class window
+class BOOST_ZLIB_CLASS_DECL window
 {
     std::unique_ptr<std::uint8_t[]> p_;
     std::uint16_t i_ = 0;

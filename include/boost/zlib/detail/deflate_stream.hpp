@@ -55,7 +55,7 @@ namespace boost {
 namespace zlib {
 namespace detail {
 
-class deflate_stream
+class BOOST_ZLIB_CLASS_DECL deflate_stream
 {
 protected:
     // Upper limit on code length
@@ -604,63 +604,61 @@ protected:
     Unsigned
     bi_reverse(Unsigned code, unsigned len);
 
-    BOOST_ZLIB_DECL
     static
     void
     gen_codes(ct_data *tree, int max_code, std::uint16_t *bl_count);
 
-    BOOST_ZLIB_DECL
     static
     lut_type const&
     get_lut();
 
-    BOOST_ZLIB_DECL void doReset             (int level, int windowBits, int memLevel, Strategy strategy);
-    BOOST_ZLIB_DECL void doReset             ();
-    BOOST_ZLIB_DECL void doClear             ();
-    BOOST_ZLIB_DECL std::size_t doUpperBound (std::size_t sourceLen) const;
-    BOOST_ZLIB_DECL void doTune              (int good_length, int max_lazy, int nice_length, int max_chain);
-    BOOST_ZLIB_DECL void doParams            (z_params& zs, int level, Strategy strategy, error_code& ec);
-    BOOST_ZLIB_DECL void doWrite             (z_params& zs, boost::optional<Flush> flush, error_code& ec);
-    BOOST_ZLIB_DECL void doDictionary        (Byte const* dict, uInt dictLength, error_code& ec);
-    BOOST_ZLIB_DECL void doPrime             (int bits, int value, error_code& ec);
-    BOOST_ZLIB_DECL void doPending           (unsigned* value, int* bits);
+    void doReset             (int level, int windowBits, int memLevel, Strategy strategy);
+    void doReset             ();
+    void doClear             ();
+    std::size_t doUpperBound (std::size_t sourceLen) const;
+    void doTune              (int good_length, int max_lazy, int nice_length, int max_chain);
+    void doParams            (z_params& zs, int level, Strategy strategy, error_code& ec);
+    void doWrite             (z_params& zs, boost::optional<Flush> flush, error_code& ec);
+    void doDictionary        (Byte const* dict, uInt dictLength, error_code& ec);
+    void doPrime             (int bits, int value, error_code& ec);
+    void doPending           (unsigned* value, int* bits);
 
-    BOOST_ZLIB_DECL void init                ();
-    BOOST_ZLIB_DECL void lm_init             ();
-    BOOST_ZLIB_DECL void init_block          ();
-    BOOST_ZLIB_DECL void pqdownheap          (ct_data const* tree, int k);
-    BOOST_ZLIB_DECL void pqremove            (ct_data const* tree, int& top);
-    BOOST_ZLIB_DECL void gen_bitlen          (tree_desc *desc);
-    BOOST_ZLIB_DECL void build_tree          (tree_desc *desc);
-    BOOST_ZLIB_DECL void scan_tree           (ct_data *tree, int max_code);
-    BOOST_ZLIB_DECL void send_tree           (ct_data *tree, int max_code);
-    BOOST_ZLIB_DECL int  build_bl_tree       ();
-    BOOST_ZLIB_DECL void send_all_trees      (int lcodes, int dcodes, int blcodes);
-    BOOST_ZLIB_DECL void compress_block      (ct_data const* ltree, ct_data const* dtree);
-    BOOST_ZLIB_DECL int  detect_data_type    ();
-    BOOST_ZLIB_DECL void bi_windup           ();
-    BOOST_ZLIB_DECL void bi_flush            ();
-    BOOST_ZLIB_DECL void copy_block          (char *buf, unsigned len, int header);
+    void init                ();
+    void lm_init             ();
+    void init_block          ();
+    void pqdownheap          (ct_data const* tree, int k);
+    void pqremove            (ct_data const* tree, int& top);
+    void gen_bitlen          (tree_desc *desc);
+    void build_tree          (tree_desc *desc);
+    void scan_tree           (ct_data *tree, int max_code);
+    void send_tree           (ct_data *tree, int max_code);
+    int  build_bl_tree       ();
+    void send_all_trees      (int lcodes, int dcodes, int blcodes);
+    void compress_block      (ct_data const* ltree, ct_data const* dtree);
+    int  detect_data_type    ();
+    void bi_windup           ();
+    void bi_flush            ();
+    void copy_block          (char *buf, unsigned len, int header);
 
-    BOOST_ZLIB_DECL void tr_init             ();
-    BOOST_ZLIB_DECL void tr_align            ();
-    BOOST_ZLIB_DECL void tr_flush_bits       ();
-    BOOST_ZLIB_DECL void tr_stored_block     (char *bu, std::uint32_t stored_len, int last);
-    BOOST_ZLIB_DECL void tr_tally_dist       (std::uint16_t dist, std::uint8_t len, bool& flush);
-    BOOST_ZLIB_DECL void tr_tally_lit        (std::uint8_t c, bool& flush);
+    void tr_init             ();
+    void tr_align            ();
+    void tr_flush_bits       ();
+    void tr_stored_block     (char *bu, std::uint32_t stored_len, int last);
+    void tr_tally_dist       (std::uint16_t dist, std::uint8_t len, bool& flush);
+    void tr_tally_lit        (std::uint8_t c, bool& flush);
 
-    BOOST_ZLIB_DECL void tr_flush_block      (z_params& zs, char *buf, std::uint32_t stored_len, int last);
-    BOOST_ZLIB_DECL void fill_window         (z_params& zs);
-    BOOST_ZLIB_DECL void flush_pending       (z_params& zs);
-    BOOST_ZLIB_DECL void flush_block         (z_params& zs, bool last);
-    BOOST_ZLIB_DECL int  read_buf            (z_params& zs, Byte *buf, unsigned size);
-    BOOST_ZLIB_DECL uInt longest_match       (IPos cur_match);
+    void tr_flush_block      (z_params& zs, char *buf, std::uint32_t stored_len, int last);
+    void fill_window         (z_params& zs);
+    void flush_pending       (z_params& zs);
+    void flush_block         (z_params& zs, bool last);
+    int  read_buf            (z_params& zs, Byte *buf, unsigned size);
+    uInt longest_match       (IPos cur_match);
 
-    BOOST_ZLIB_DECL block_state f_stored     (z_params& zs, Flush flush);
-    BOOST_ZLIB_DECL block_state f_fast       (z_params& zs, Flush flush);
-    BOOST_ZLIB_DECL block_state f_slow       (z_params& zs, Flush flush);
-    BOOST_ZLIB_DECL block_state f_rle        (z_params& zs, Flush flush);
-    BOOST_ZLIB_DECL block_state f_huff       (z_params& zs, Flush flush);
+    block_state f_stored     (z_params& zs, Flush flush);
+    block_state f_fast       (z_params& zs, Flush flush);
+    block_state f_slow       (z_params& zs, Flush flush);
+    block_state f_rle        (z_params& zs, Flush flush);
+    block_state f_huff       (z_params& zs, Flush flush);
 
     block_state
     deflate_stored(z_params& zs, Flush flush)
@@ -717,9 +715,5 @@ bi_reverse(Unsigned code, unsigned len)
 } // detail
 } // zlib
 } // boost
-
-#ifdef BOOST_ZLIB_HEADER_ONLY
-#include <boost/zlib/detail/impl/deflate_stream.ipp>
-#endif
 
 #endif

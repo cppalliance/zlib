@@ -28,7 +28,7 @@ in a translation unit of the program.
 
 #include <boost/zlib/detail/config.hpp>
 
-#include <boost/zlib/detail/impl/error.ipp>
+#include <boost/zlib/impl/error.ipp>
 #include <boost/zlib/detail/impl/deflate_stream.ipp>
 #include <boost/zlib/detail/impl/inflate_stream.ipp>
 
