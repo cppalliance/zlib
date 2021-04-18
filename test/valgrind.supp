@@ -1,0 +1,96 @@
+{
+   deflate_fast1
+   Memcheck:Cond
+   fun:slide_hash
+   fun:fill_window
+   fun:deflate_fast
+   fun:deflate
+   fun:_ZN5boost4zlib19deflate_stream_test14ZlibCompressor5writeENS0_5FlushE
+   fun:_ZN5boost4zlib19deflate_stream_test15doDeflate1_zlibERNS1_11ICompressorEiiiiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
+   fun:_ZN5boost4zlib19deflate_stream_test8doMatrixERNS1_11ICompressorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEMS1_FvS3_iiiiSB_E
+   fun:_ZN5boost4zlib19deflate_stream_test11testDeflateERNS1_11ICompressorE
+   fun:_ZN5boost4zlib19deflate_stream_test3runEv
+   fun:_ZN10test_suite6detail8instanceIN5boost4zlib19deflate_stream_testEE3runEv
+   fun:_ZN10test_suite6detail6runner3runERKNS0_10suite_infoE
+   fun:_ZN10test_suite3runERSoiPKPKc
+}
+{
+   deflate_huff1
+   Memcheck:Cond
+   fun:slide_hash
+   fun:fill_window
+   fun:deflate_huff
+   fun:deflate
+   fun:_ZN5boost4zlib19deflate_stream_test14ZlibCompressor5writeENS0_5FlushE
+   fun:_ZN5boost4zlib19deflate_stream_test15doDeflate1_zlibERNS1_11ICompressorEiiiiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
+   fun:_ZN5boost4zlib19deflate_stream_test8doMatrixERNS1_11ICompressorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEMS1_FvS3_iiiiSB_E
+   fun:_ZN5boost4zlib19deflate_stream_test11testDeflateERNS1_11ICompressorE
+   fun:_ZN5boost4zlib19deflate_stream_test3runEv
+   fun:_ZN10test_suite6detail8instanceIN5boost4zlib19deflate_stream_testEE3runEv
+   fun:_ZN10test_suite6detail6runner3runERKNS0_10suite_infoE
+   fun:_ZN10test_suite3runERSoiPKPKc
+}
+{
+   deflate_rle1
+   Memcheck:Cond
+   fun:slide_hash
+   fun:fill_window
+   fun:deflate_rle
+   fun:deflate
+   fun:_ZN5boost4zlib19deflate_stream_test14ZlibCompressor5writeENS0_5FlushE
+   fun:_ZN5boost4zlib19deflate_stream_test15doDeflate1_zlibERNS1_11ICompressorEiiiiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
+   fun:_ZN5boost4zlib19deflate_stream_test8doMatrixERNS1_11ICompressorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEMS1_FvS3_iiiiSB_E
+   fun:_ZN5boost4zlib19deflate_stream_test11testDeflateERNS1_11ICompressorE
+   fun:_ZN5boost4zlib19deflate_stream_test3runEv
+   fun:_ZN10test_suite6detail8instanceIN5boost4zlib19deflate_stream_testEE3runEv
+   fun:_ZN10test_suite6detail6runner3runERKNS0_10suite_infoE
+   fun:_ZN10test_suite3runERSoiPKPKc
+}
+{
+   deflate_fast2
+   Memcheck:Cond
+   fun:slide_hash
+   fun:fill_window
+   fun:deflate_fast
+   fun:deflate
+   fun:_ZN5boost4zlib19inflate_stream_test8compressB5cxx11ERKNS_17basic_string_viewIcSt11char_traitsIcEEEiiii
+   fun:_ZNK5boost4zlib19inflate_stream_test6MatrixclINS1_4ZLibEEEvRKT_RKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
+   fun:_ZN5boost4zlib19inflate_stream_test11testInflateERNS1_13IDecompressorE
+   fun:_ZN5boost4zlib19inflate_stream_test3runEv
+   fun:_ZN10test_suite6detail8instanceIN5boost4zlib19inflate_stream_testEE3runEv
+   fun:_ZN10test_suite6detail6runner3runERKNS0_10suite_infoE
+   fun:_ZN10test_suite3runERSoiPKPKc
+   fun:main
+}
+{
+   deflate_huff2
+   Memcheck:Cond
+   fun:slide_hash
+   fun:fill_window
+   fun:deflate_huff
+   fun:deflate
+   fun:_ZN5boost4zlib19inflate_stream_test8compressB5cxx11ERKNS_17basic_string_viewIcSt11char_traitsIcEEEiiii
+   fun:_ZNK5boost4zlib19inflate_stream_test6MatrixclINS1_4ZLibEEEvRKT_RKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
+   fun:_ZN5boost4zlib19inflate_stream_test11testInflateERNS1_13IDecompressorE
+   fun:_ZN5boost4zlib19inflate_stream_test3runEv
+   fun:_ZN10test_suite6detail8instanceIN5boost4zlib19inflate_stream_testEE3runEv
+   fun:_ZN10test_suite6detail6runner3runERKNS0_10suite_infoE
+   fun:_ZN10test_suite3runERSoiPKPKc
+   fun:main
+}
+{
+   deflate_rle2
+   Memcheck:Cond
+   fun:slide_hash
+   fun:fill_window
+   fun:deflate_rle
+   fun:deflate
+   fun:_ZN5boost4zlib19inflate_stream_test8compressB5cxx11ERKNS_17basic_string_viewIcSt11char_traitsIcEEEiiii
+   fun:_ZNK5boost4zlib19inflate_stream_test6MatrixclINS1_4ZLibEEEvRKT_RKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
+   fun:_ZN5boost4zlib19inflate_stream_test11testInflateERNS1_13IDecompressorE
+   fun:_ZN5boost4zlib19inflate_stream_test3runEv
+   fun:_ZN10test_suite6detail8instanceIN5boost4zlib19inflate_stream_testEE3runEv
+   fun:_ZN10test_suite6detail6runner3runERKNS0_10suite_infoE
+   fun:_ZN10test_suite3runERSoiPKPKc
+   fun:main
+}
