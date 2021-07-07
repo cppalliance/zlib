@@ -45,16 +45,9 @@ if(BOOST_ZLIB_IS_ROOT)
         static_assert
         system
         throw_exception
-        utility
 
         # indirect dependencies
-        container_hash
-        detail
-        integer
-        io
         predef
-        preprocessor
-        type_traits
         winapi
     )
         add_subdirectory(../${lib} libs/${lib} EXCLUDE_FROM_ALL)
@@ -103,7 +96,6 @@ target_link_libraries(boost_zlib
         Boost::static_assert
         Boost::system
         Boost::throw_exception
-        Boost::utility
 )
 
 
