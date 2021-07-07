@@ -10,7 +10,6 @@
 // Test that header file is self-contained.
 #include <boost/zlib/deflate_stream.hpp>
 
-#include <boost/utility/string_view.hpp>
 #include "test_suite.hpp"
 #include <array>
 #include <cstdint>
@@ -154,7 +153,7 @@ public:
     static
     std::string
     compress(
-        string_view const& in,
+        std::string const& in,
         int level,                  // 0=none, 1..9, -1=default
         int windowBits,             // 9..15
         int memLevel)               // 1..9 (8=default)
@@ -191,7 +190,7 @@ public:
 
     static
     std::string
-    decompress(string_view const& in)
+    decompress(std::string const& in)
     {
         int result;
         std::string out;
@@ -444,9 +443,9 @@ public:
         c.init();
         std::string out;
         out.resize(1024);
-        string_view s = "Hello";
-        c.next_in(s.data());
-        c.avail_in(s.size());
+        auto& s = "Hello";
+        c.next_in(s);
+        c.avail_in(sizeof(s));
         c.next_out(&out.front());
         c.avail_out(out.size());
         error_code ec = c.write(Flush::sync);
@@ -455,8 +454,8 @@ public:
         c.avail_in(0);
         ec = c.write(Flush::finish);
         BOOST_TEST(ec == error::end_of_stream);
-        c.next_in(s.data());
-        c.avail_in(s.size());
+        c.next_in(s);
+        c.avail_in(sizeof(s));
         c.next_out(&out.front());
         c.avail_out(out.size());
         ec = c.write(Flush::sync);
@@ -471,9 +470,9 @@ public:
         c.init();
         std::string out;
         out.resize(1024);
-        string_view s = "Hello";
-        c.next_in(s.data());
-        c.avail_in(s.size());
+        auto& s = "Hello";
+        c.next_in(s);
+        c.avail_in(sizeof(s));
         c.next_out(&out.front());
         c.avail_out(out.size());
         error_code ec;

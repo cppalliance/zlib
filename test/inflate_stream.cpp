@@ -10,7 +10,6 @@
 // Test that header file is self-contained.
 #include <boost/zlib/inflate_stream.hpp>
 
-#include <boost/utility/string_view.hpp>
 #include "test_suite.hpp"
 #include <chrono>
 #include <random>
@@ -152,7 +151,7 @@ public:
     static
     std::string
     compress(
-        string_view const& in,
+        std::string const& in,
         int level,                  // 0=none, 1..9, -1=default
         int windowBits,             // 9..15
         int memLevel,               // 1..9 (8=default)
