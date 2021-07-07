@@ -41,7 +41,6 @@
 #include <boost/zlib/detail/ranges.hpp>
 #include <boost/assert.hpp>
 #include <boost/config.hpp>
-#include <boost/make_unique.hpp>
 #include <boost/optional.hpp>
 #include <boost/throw_exception.hpp>
 #include <cstdint>
@@ -617,8 +616,7 @@ init()
 
     if(! buf_ || buf_size_ != needed)
     {
-        buf_ = boost::make_unique_noinit<
-            std::uint8_t[]>(needed);
+        buf_.reset(new std::uint8_t[needed]);
         buf_size_ = needed;
     }
 

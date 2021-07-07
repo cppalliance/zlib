@@ -43,7 +43,6 @@ if(BOOST_ZLIB_IS_ROOT)
         config
         core
         optional
-        smart_ptr
         static_assert
         system
         throw_exception
@@ -104,7 +103,6 @@ target_link_libraries(boost_zlib
         Boost::config
         Boost::core
         Boost::optional
-        Boost::smart_ptr
         Boost::static_assert
         Boost::system
 )
