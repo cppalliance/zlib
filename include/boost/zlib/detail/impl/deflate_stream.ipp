@@ -41,7 +41,7 @@
 #include <boost/zlib/detail/ranges.hpp>
 #include <boost/assert.hpp>
 #include <boost/config.hpp>
-#include <boost/optional.hpp>
+#include <boost/variant2/variant.hpp>
 #include <boost/throw_exception.hpp>
 #include <cstdint>
 #include <cstdlib>
@@ -348,13 +348,13 @@ doParams(z_params& zs, int level, Strategy strategy, error_code& ec)
     strategy_ = strategy;
 }
 
-// VFALCO boost::optional param is a workaround for
+// VFALCO boost::variant2::variant param is a workaround for
 //        gcc "maybe uninitialized" warning
 //        https://github.com/boostorg/beast/issues/532
 //
 void
 deflate_stream::
-doWrite(z_params& zs, boost::optional<Flush> flush, error_code& ec)
+doWrite(z_params& zs, boost::variant2::variant<boost::variant2::monostate, Flush> flush, error_code& ec)
 {
     maybe_init();
 
@@ -362,7 +362,7 @@ doWrite(z_params& zs, boost::optional<Flush> flush, error_code& ec)
         BOOST_THROW_EXCEPTION(std::invalid_argument{"invalid input"});
 
     if(zs.next_out == nullptr ||
-        (status_ == FINISH_STATE && flush != Flush::finish))
+        (status_ == FINISH_STATE && flush != decltype(flush)(Flush::finish)))
     {
         ec = error::stream_error;
         return;
@@ -374,9 +374,11 @@ doWrite(z_params& zs, boost::optional<Flush> flush, error_code& ec)
     }
 
     // value of flush param for previous deflate call
-    auto old_flush = boost::make_optional<Flush>(
-        last_flush_.is_initialized(),
-        last_flush_ ? *last_flush_ : Flush::none);
+    boost::variant2::variant<boost::variant2::monostate, Flush> old_flush;
+    if(Flush* ptr = boost::variant2::get_if<Flush>(&last_flush_))
+        old_flush = *ptr;
+    else
+        old_flush = Flush::none;
 
     last_flush_ = flush;
 
@@ -392,13 +394,14 @@ doWrite(z_params& zs, boost::optional<Flush> flush, error_code& ec)
              * but this is not an error situation so make sure we
              * return OK instead of BUF_ERROR at next call of deflate:
              */
-            last_flush_ = boost::none;
+            last_flush_ = {};
             return;
         }
     }
     else if(zs.avail_in == 0 && (
-            old_flush && flush <= *old_flush // Caution: depends on enum order
-        ) && flush != Flush::finish)
+            boost::variant2::holds_alternative<Flush>(old_flush)
+            && flush <= old_flush // Caution: depends on enum order
+        ) && flush != decltype(flush)(Flush::finish))
     {
         /* Make sure there is something to do and avoid duplicate consecutive
          * flushes. For repeated and useless calls with Flush::finish, we keep
@@ -418,21 +421,22 @@ doWrite(z_params& zs, boost::optional<Flush> flush, error_code& ec)
     /* Start a new block or continue the current one.
      */
     if(zs.avail_in != 0 || lookahead_ != 0 ||
-        (flush != Flush::none && status_ != FINISH_STATE))
+        (flush != decltype(flush)(Flush::none) && status_ != FINISH_STATE))
     {
         block_state bstate;
 
         switch(strategy_)
         {
         case Strategy::huffman:
-            bstate = deflate_huff(zs, flush.get());
+            bstate = deflate_huff(zs, boost::variant2::get<Flush>(flush));
             break;
         case Strategy::rle:
-            bstate = deflate_rle(zs, flush.get());
+            bstate = deflate_rle(zs, boost::variant2::get<Flush>(flush));
             break;
         default:
         {
-            bstate = (this->*(get_config(level_).func))(zs, flush.get());
+            bstate = (this->*(get_config(level_).func))(zs,
+                boost::variant2::get<Flush>(flush));
             break;
         }
         }
@@ -445,7 +449,7 @@ doWrite(z_params& zs, boost::optional<Flush> flush, error_code& ec)
         {
             if(zs.avail_out == 0)
             {
-                last_flush_ = boost::none; /* avoid BUF_ERROR next call, see above */
+                last_flush_ = {}; /* avoid BUF_ERROR next call, see above */
             }
             return;
             /*  If flush != Flush::none && avail_out == 0, the next call
@@ -458,18 +462,18 @@ doWrite(z_params& zs, boost::optional<Flush> flush, error_code& ec)
         }
         if(bstate == block_done)
         {
-            if(flush == Flush::partial)
+            if(flush == decltype(flush)(Flush::partial))
             {
                 tr_align();
             }
-            else if(flush != Flush::block)
+            else if(flush != decltype(flush)(Flush::block))
             {
                 /* FULL_FLUSH or SYNC_FLUSH */
                 tr_stored_block(nullptr, 0L, 0);
                 /* For a full flush, this empty block will be recognized
                  * as a special marker by inflate_sync().
                  */
-                if(flush == Flush::full)
+                if(flush == decltype(flush)(Flush::full))
                 {
                     clear_hash(); // forget history
                     if(lookahead_ == 0)
@@ -483,13 +487,13 @@ doWrite(z_params& zs, boost::optional<Flush> flush, error_code& ec)
             flush_pending(zs);
             if(zs.avail_out == 0)
             {
-                last_flush_ = boost::none; /* avoid BUF_ERROR at next call, see above */
+                last_flush_ = {}; /* avoid BUF_ERROR at next call, see above */
                 return;
             }
         }
     }
 
-    if(flush == Flush::finish)
+    if(flush == decltype(flush)(Flush::finish))
     {
         ec = error::end_of_stream;
         return;

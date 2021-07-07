@@ -42,18 +42,18 @@ if(BOOST_ZLIB_IS_ROOT)
         assert
         config
         core
-        optional
         static_assert
         system
         throw_exception
         utility
+        variant2
 
         # indirect dependencies
         container_hash
         detail
         integer
         io
-        move
+        mp11
         predef
         preprocessor
         type_traits
@@ -102,9 +102,11 @@ target_link_libraries(boost_zlib
         Boost::assert
         Boost::config
         Boost::core
-        Boost::optional
         Boost::static_assert
         Boost::system
+        Boost::throw_exception
+        Boost::utility
+        Boost::variant2
 )
 
 

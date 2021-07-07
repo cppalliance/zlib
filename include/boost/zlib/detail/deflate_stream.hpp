@@ -42,7 +42,7 @@
 #include <boost/zlib/detail/ranges.hpp>
 #include <boost/assert.hpp>
 #include <boost/config.hpp>
-#include <boost/optional.hpp>
+#include <boost/variant2/variant.hpp>
 #include <boost/throw_exception.hpp>
 #include <cstdint>
 #include <cstdlib>
@@ -258,7 +258,7 @@ protected:
         pending_buf_size_;          // size of pending_buf
     Byte* pending_out_;             // next pending byte to output to the stream
     uInt pending_;                  // nb of bytes in the pending buffer
-    boost::optional<Flush>
+    boost::variant2::variant<boost::variant2::monostate, Flush>
         last_flush_;                // value of flush param for previous deflate call
 
     uInt w_size_;                   // LZ77 window size (32K by default)
@@ -618,7 +618,7 @@ protected:
     std::size_t doUpperBound (std::size_t sourceLen) const;
     void doTune              (int good_length, int max_lazy, int nice_length, int max_chain);
     void doParams            (z_params& zs, int level, Strategy strategy, error_code& ec);
-    void doWrite             (z_params& zs, boost::optional<Flush> flush, error_code& ec);
+    void doWrite             (z_params& zs, boost::variant2::variant<boost::variant2::monostate, Flush> flush, error_code& ec);
     void doDictionary        (Byte const* dict, uInt dictLength, error_code& ec);
     void doPrime             (int bits, int value, error_code& ec);
     void doPending           (unsigned* value, int* bits);
