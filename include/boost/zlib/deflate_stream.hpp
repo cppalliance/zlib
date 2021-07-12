@@ -285,7 +285,7 @@ public:
         Flush flush,
         error_code& ec)
     {
-        doWrite(zs, flush, ec);
+        doWrite(zs, std::make_pair(true, flush), ec);
     }
 
     /** Update the compression level and strategy.

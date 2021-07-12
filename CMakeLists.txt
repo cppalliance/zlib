@@ -42,7 +42,6 @@ if(BOOST_ZLIB_IS_ROOT)
         assert
         config
         core
-        optional
         static_assert
         system
         throw_exception
@@ -53,7 +52,6 @@ if(BOOST_ZLIB_IS_ROOT)
         detail
         integer
         io
-        move
         predef
         preprocessor
         type_traits
@@ -102,9 +100,10 @@ target_link_libraries(boost_zlib
         Boost::assert
         Boost::config
         Boost::core
-        Boost::optional
         Boost::static_assert
         Boost::system
+        Boost::throw_exception
+        Boost::utility
 )
 
 
