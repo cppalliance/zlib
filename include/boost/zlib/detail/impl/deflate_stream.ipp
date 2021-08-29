@@ -361,7 +361,7 @@ doWrite(z_params& zs, std::pair<bool, Flush> flush, error_code& ec)
         BOOST_THROW_EXCEPTION(std::invalid_argument{"invalid input"});
 
     if(zs.next_out == nullptr ||
-        (status_ == FINISH_STATE && !(flush.first  && flush.second == Flush::finish)))
+        (status_ == FINISH_STATE && !(flush.first && flush.second == Flush::finish)))
     {
         ec = error::stream_error;
         return;
@@ -1561,7 +1561,7 @@ fill_window(z_params& zs)
             => more >= window_size - (kMinLookahead-1 + WSIZE + max_dist-1)
             => more >= window_size - 2*WSIZE + 2
             In the BIG_MEM or MMAP case (not yet supported),
-              window_size == input_size + kMinLookahead  &&
+              window_size == input_size + kMinLookahead &&
               strstart + lookahead_ <= input_size => more >= kMinLookahead.
             Otherwise, window_size == 2*WSIZE so more >= 2.
             If there was sliding, more >= WSIZE. So in all cases, more >= 2.
