@@ -41,8 +41,6 @@
 #include <boost/zlib/detail/ranges.hpp>
 #include <boost/assert.hpp>
 #include <boost/config.hpp>
-#include <boost/make_unique.hpp>
-#include <boost/optional.hpp>
 #include <boost/throw_exception.hpp>
 #include <cstdint>
 #include <cstdlib>
@@ -334,7 +332,7 @@ doParams(z_params& zs, int level, Strategy strategy, error_code& ec)
         zs.total_in != 0)
     {
         // Flush the last buffer:
-        doWrite(zs, Flush::block, ec);
+        doWrite(zs, std::make_pair(true, Flush::block), ec);
         if(ec == error::need_buffers && pending_ == 0)
             ec = {};
     }
@@ -349,13 +347,13 @@ doParams(z_params& zs, int level, Strategy strategy, error_code& ec)
     strategy_ = strategy;
 }
 
-// VFALCO boost::optional param is a workaround for
+// VFALCO std::pair param is a workaround for
 //        gcc "maybe uninitialized" warning
 //        https://github.com/boostorg/beast/issues/532
 //
 void
 deflate_stream::
-doWrite(z_params& zs, boost::optional<Flush> flush, error_code& ec)
+doWrite(z_params& zs, std::pair<bool, Flush> flush, error_code& ec)
 {
     maybe_init();
 
@@ -363,7 +361,7 @@ doWrite(z_params& zs, boost::optional<Flush> flush, error_code& ec)
         BOOST_THROW_EXCEPTION(std::invalid_argument{"invalid input"});
 
     if(zs.next_out == nullptr ||
-        (status_ == FINISH_STATE && flush != Flush::finish))
+        (status_ == FINISH_STATE && !(flush.first  && flush.second == Flush::finish)))
     {
         ec = error::stream_error;
         return;
@@ -375,9 +373,11 @@ doWrite(z_params& zs, boost::optional<Flush> flush, error_code& ec)
     }
 
     // value of flush param for previous deflate call
-    auto old_flush = boost::make_optional<Flush>(
-        last_flush_.is_initialized(),
-        last_flush_ ? *last_flush_ : Flush::none);
+    std::pair<bool, Flush> old_flush;
+    if(last_flush_.first)
+        old_flush = last_flush_;
+    else
+        old_flush = {};
 
     last_flush_ = flush;
 
@@ -393,13 +393,13 @@ doWrite(z_params& zs, boost::optional<Flush> flush, error_code& ec)
              * but this is not an error situation so make sure we
              * return OK instead of BUF_ERROR at next call of deflate:
              */
-            last_flush_ = boost::none;
+            last_flush_ = {};
             return;
         }
     }
     else if(zs.avail_in == 0 && (
-            old_flush && flush <= *old_flush // Caution: depends on enum order
-        ) && flush != Flush::finish)
+            old_flush.first && flush.second <= old_flush.second // Caution: depends on enum order
+        ) && !(flush.first && flush.second == Flush::finish))
     {
         /* Make sure there is something to do and avoid duplicate consecutive
          * flushes. For repeated and useless calls with Flush::finish, we keep
@@ -419,21 +419,21 @@ doWrite(z_params& zs, boost::optional<Flush> flush, error_code& ec)
     /* Start a new block or continue the current one.
      */
     if(zs.avail_in != 0 || lookahead_ != 0 ||
-        (flush != Flush::none && status_ != FINISH_STATE))
+        (!(flush.first && flush.second == Flush::none) && status_ != FINISH_STATE))
     {
         block_state bstate;
 
         switch(strategy_)
         {
         case Strategy::huffman:
-            bstate = deflate_huff(zs, flush.get());
+            bstate = deflate_huff(zs, flush.second);
             break;
         case Strategy::rle:
-            bstate = deflate_rle(zs, flush.get());
+            bstate = deflate_rle(zs, flush.second);
             break;
         default:
         {
-            bstate = (this->*(get_config(level_).func))(zs, flush.get());
+            bstate = (this->*(get_config(level_).func))(zs, flush.second);
             break;
         }
         }
@@ -446,7 +446,7 @@ doWrite(z_params& zs, boost::optional<Flush> flush, error_code& ec)
         {
             if(zs.avail_out == 0)
             {
-                last_flush_ = boost::none; /* avoid BUF_ERROR next call, see above */
+                last_flush_ = {}; /* avoid BUF_ERROR next call, see above */
             }
             return;
             /*  If flush != Flush::none && avail_out == 0, the next call
@@ -459,18 +459,18 @@ doWrite(z_params& zs, boost::optional<Flush> flush, error_code& ec)
         }
         if(bstate == block_done)
         {
-            if(flush == Flush::partial)
+            if(flush.first && flush.second == Flush::partial)
             {
                 tr_align();
             }
-            else if(flush != Flush::block)
+            else if(!flush.first || flush.second != Flush::block)
             {
                 /* FULL_FLUSH or SYNC_FLUSH */
                 tr_stored_block(nullptr, 0L, 0);
                 /* For a full flush, this empty block will be recognized
                  * as a special marker by inflate_sync().
                  */
-                if(flush == Flush::full)
+                if(flush.first && flush.second == Flush::full)
                 {
                     clear_hash(); // forget history
                     if(lookahead_ == 0)
@@ -484,13 +484,13 @@ doWrite(z_params& zs, boost::optional<Flush> flush, error_code& ec)
             flush_pending(zs);
             if(zs.avail_out == 0)
             {
-                last_flush_ = boost::none; /* avoid BUF_ERROR at next call, see above */
+                last_flush_ = {}; /* avoid BUF_ERROR at next call, see above */
                 return;
             }
         }
     }
 
-    if(flush == Flush::finish)
+    if(flush.first && flush.second == Flush::finish)
     {
         ec = error::end_of_stream;
         return;
@@ -617,8 +617,7 @@ init()
 
     if(! buf_ || buf_size_ != needed)
     {
-        buf_ = boost::make_unique_noinit<
-            std::uint8_t[]>(needed);
+        buf_.reset(new std::uint8_t[needed]);
         buf_size_ = needed;
     }
 
@@ -650,7 +649,7 @@ init()
     pending_out_ = pending_buf_;
 
     status_ = BUSY_STATE;
-    last_flush_ = Flush::none;
+    last_flush_ = std::make_pair(true, Flush::none);
 
     tr_init();
     lm_init();
