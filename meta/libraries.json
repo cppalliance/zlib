@@ -1,0 +1,18 @@
+{
+    "key": "zlib",
+    "name": "Zlib",
+    "authors": [
+        "Vinnie Falco",
+        "Emil Dotchevski"
+    ],
+    "description": "Zlib Compression",
+    "category": [
+        "Data",
+        "IO"
+    ],
+    "maintainers": [
+        "Vinnie Falco <vinnie.falco@gmail.com>",
+        "Emil Dotchevski <emildotchevski@gmail.com>"
+    ],
+    "cxxstd": "11"
+}
